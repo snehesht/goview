@@ -1,15 +1,15 @@
 package main
 
 import (
-	"log"
+	"embed"
+	"io/fs"
 	"net/http"
 
-	_ "github.com/snehesht/goview/statik"
-
-	"github.com/rakyll/statik/fs"
 	"github.com/webview/webview"
 )
 
+//go:embed app/build/*
+var content embed.FS
 
 func main() {
 	go start()
@@ -17,15 +17,19 @@ func main() {
 	defer w.Destroy()
 	w.SetTitle("Create React App")
 	w.SetSize(1280, 720, webview.HintNone)
-	w.Navigate("http://localhost:8181/index.html")
+	w.Navigate("http://localhost:8181")
 	w.Run()
 }
 
+func httpHandler() http.Handler {
+	fsys := fs.FS(content)
+	html, _ := fs.Sub(fsys, "app/build")
+	return http.FileServer(http.FS(html))
+}
+
 func start() {
-	statikFS, err := fs.New()
-	if err != nil {
-		log.Fatal(err)
-	}
-	http.Handle("/", http.StripPrefix("/", http.FileServer(statikFS)))
-	http.ListenAndServe(":8181", nil)
+	mux := http.NewServeMux()
+	mux.Handle("/", httpHandler())
+
+	http.ListenAndServe(":8181", mux)
 }
