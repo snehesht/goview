@@ -11,7 +11,22 @@ make run
 make build
 
 ```
-![Screenshot from 2022-07-08 20-01-44](https://user-images.githubusercontent.com/5787031/178083382-52021032-b763-4349-8dbb-3f72ba027005.png)
+```
+$$  8:01PM [~/Workspace/projects/goview] (main) ✔ ls -lah ./goview
+-rwxrwxr-x 1 snehesh snehesh 7.6M Jul  8 20:01 ./goview
+$$  8:01PM [~/Workspace/projects/goview] (main) ✔ upx goview
+                       Ultimate Packer for eXecutables
+                          Copyright (C) 1996 - 2020
+UPX 3.96        Markus Oberhumer, Laszlo Molnar & John Reiser   Jan 23rd 2020
+
+        File size         Ratio      Format      Name
+   --------------------   ------   -----------   -----------
+   7876784 ->   4135080   52.50%   linux/amd64   goview
+
+Packed 1 file.
+$$  8:01PM [~/Workspace/projects/goview] (main) ✔ ls -lah ./goview
+-rwxrwxr-x 1 snehesh snehesh 4.0M Jul  8 20:01 ./goview
+```
 
 
 ### Screenshots
